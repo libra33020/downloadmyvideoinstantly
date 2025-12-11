@@ -2,7 +2,18 @@ const TelegramBot = require('node-telegram-bot-api');
 const { exec } = require('child_process');
 const fs = require('fs');
 const path = require('path');
+const http = require('http');
 
+// Health check server for Koyeb (port 8000)
+const server = http.createServer((req, res) => {
+  res.writeHead(200, { 'Content-Type': 'text/plain' });
+  res.end('Bot is running!');
+});
+server.listen(8000, () => {
+  console.log('Health check server running on port 8000');
+});
+
+// Telegram Bot
 const BOT_TOKEN = process.env.BOT_TOKEN;
 const bot = new TelegramBot(BOT_TOKEN, { polling: true });
 
